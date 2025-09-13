@@ -8,7 +8,7 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(INITIAL_LOAD);
 
   useEffect(() => {
-    fetch("/videos.json")
+    fetch(process.env.PUBLIC_URL + "/videos.json")
       .then(res => res.json())
       .then(data => {
         const sorted = data.sort((a, b) => {
