@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Podcast Platform</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    h1 { text-align: center; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card h3 { margin: 10px 0 5px; font-size: 18px; }
+    .card p { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <h1>🎙️ Podcast Platform</h1>
+  <div class="grid" id="videosGrid"></div>
+
+  <script>
+    async function loadVideos() {
+      const res = await fetch('./videos.json'); // load the generated file
+      const videos = await res.json();
+
+      const grid = document.getElementById('videosGrid');
+      videos.forEach(video => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${video.thumbnail}" alt="${video.title}">
+          <h3>${video.title}</h3>
+          <p><strong>${video.channelName}</strong></p>
+          <a href="https://www.youtube.com/watch?v=${video.videoId}" target="_blank">▶ Watch</a>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>
